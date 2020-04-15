@@ -314,6 +314,8 @@ extension SVPinView : UICollectionViewDataSource, UICollectionViewDelegate, UICo
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         placeholderLabel.text = ""
+        placeholderLabel.font = self.font
+        placeholderLabel.textColor = self.placeholderTextColor
         placeholderLabel.textColor = self.textColor.withAlphaComponent(0.5)
         
         stylePinField(containerView: containerView, underLine: underLine, isActive: false)
@@ -337,11 +339,11 @@ extension SVPinView : UICollectionViewDataSource, UICollectionViewDelegate, UICo
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
             let width = (collectionView.bounds.width - (interSpace * CGFloat(max(pinLength, 1) - 1)))/CGFloat(pinLength)
-            return CGSize(width: width, height: 90)//collectionView.frame.height) //TODO
+            return CGSize(width: width, height: collectionView.frame.height) //TODO
         }
         let width = (collectionView.bounds.width - (interSpace * CGFloat(max(pinLength, 1) - 1)))/CGFloat(pinLength)
         let height = collectionView.frame.height
-        return CGSize(width: min(width, height), height: min(width, height))
+        return CGSize(width: min(width, height), height: height)
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -377,8 +379,6 @@ extension SVPinView : UITextFieldDelegate
         let text = textField.text ?? ""
         if let placeholderLabel = textField.superview?.viewWithTag(400) as? UILabel {
             placeholderLabel.isHidden = true
-            placeholderLabel.font = self.font
-            placeholderLabel.textColor = self.placeholderTextColor
             
             if text.count == 0 {
                 textField.isSecureTextEntry = false
