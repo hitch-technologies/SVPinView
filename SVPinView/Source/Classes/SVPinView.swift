@@ -300,7 +300,7 @@ extension SVPinView : UICollectionViewDataSource, UICollectionViewDelegate, UICo
         // Setting up textField
         textField.tag = 101 + indexPath.row
         textField.isSecureTextEntry = false
-        textField.textColor = self.textColor
+        textField.textColor = .red //self.textColor
         textField.tintColor = .clear
         textField.font = self.font
         if #available(iOS 12.0, *), indexPath.row == 0, isContentTypeOneTimeCode {
