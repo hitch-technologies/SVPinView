@@ -316,7 +316,6 @@ extension SVPinView : UICollectionViewDataSource, UICollectionViewDelegate, UICo
         placeholderLabel.text = ""
         placeholderLabel.font = self.font
         placeholderLabel.textColor = self.placeholderTextColor
-        placeholderLabel.textColor = self.textColor.withAlphaComponent(0.5)
         
         stylePinField(containerView: containerView, underLine: underLine, isActive: false)
         
@@ -350,23 +349,23 @@ extension SVPinView : UICollectionViewDataSource, UICollectionViewDelegate, UICo
         return interSpace
     }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        
-        if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
-            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        }
-        let width = (collectionView.bounds.width - (interSpace * CGFloat(max(pinLength, 1) - 1)))/CGFloat(pinLength)
-        let height = collectionView.frame.height
-        let top = (collectionView.bounds.height - min(width, height)) / 2
-        if height < width {
-            // If width of field > height, size the fields to the pinView height and center them.
-            let totalCellWidth = height * CGFloat(pinLength)
-            let totalSpacingWidth = interSpace * CGFloat(max(pinLength, 1) - 1)
-            let inset = (collectionView.frame.size.width - CGFloat(totalCellWidth + CGFloat(totalSpacingWidth))) / 2
-            return UIEdgeInsets(top: top, left: inset, bottom: 0, right: inset)
-        }
-        return UIEdgeInsets(top: top, left: 0, bottom: 0, right: 0)
-    }
+//    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        
+//        if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
+//            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        }
+//        let width = (collectionView.bounds.width - (interSpace * CGFloat(max(pinLength, 1) - 1)))/CGFloat(pinLength)
+//        let height = collectionView.frame.height
+//        let top: CGFloat = 0 //(collectionView.bounds.height - min(width, height)) / 2
+//        if height < width {
+//            // If width of field > height, size the fields to the pinView height and center them.
+//            let totalCellWidth = height * CGFloat(pinLength)
+//            let totalSpacingWidth = interSpace * CGFloat(max(pinLength, 1) - 1)
+//            let inset = (collectionView.frame.size.width - CGFloat(totalCellWidth + CGFloat(totalSpacingWidth))) / 2
+//            return UIEdgeInsets(top: top, left: inset, bottom: 0, right: inset)
+//        }
+//        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//    }
     
     public override func layoutSubviews() {
         flowLayout.invalidateLayout()
