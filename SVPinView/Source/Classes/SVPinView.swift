@@ -36,6 +36,7 @@ public class SVPinView: UIView {
     @IBInspectable public var secureCharacter: String = "\u{25CF}"
     @IBInspectable public var interSpace: CGFloat = 5
     @IBInspectable public var textColor: UIColor = UIColor.black
+    @IBInspectable public var placeholderTextColor: UIColor = UIColor.gray
     @IBInspectable public var shouldSecureText: Bool = true
     @IBInspectable public var allowsWhitespaces: Bool = true
     @IBInspectable public var placeholder: String = ""
@@ -300,8 +301,8 @@ extension SVPinView : UICollectionViewDataSource, UICollectionViewDelegate, UICo
         // Setting up textField
         textField.tag = 101 + indexPath.row
         textField.isSecureTextEntry = false
-        textField.textColor = .red //self.textColor
-        textField.tintColor = .clear
+        textField.textColor = self.textColor
+        textField.tintColor = self.view.tintColor
         textField.font = self.font
         if #available(iOS 12.0, *), indexPath.row == 0, isContentTypeOneTimeCode {
             textField.textContentType = .oneTimeCode
@@ -336,7 +337,7 @@ extension SVPinView : UICollectionViewDataSource, UICollectionViewDelegate, UICo
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
             let width = (collectionView.bounds.width - (interSpace * CGFloat(max(pinLength, 1) - 1)))/CGFloat(pinLength)
-            return CGSize(width: width, height: collectionView.frame.height)
+            return CGSize(width: width, height: 90)//collectionView.frame.height) //TODO
         }
         let width = (collectionView.bounds.width - (interSpace * CGFloat(max(pinLength, 1) - 1)))/CGFloat(pinLength)
         let height = collectionView.frame.height
@@ -376,6 +377,8 @@ extension SVPinView : UITextFieldDelegate
         let text = textField.text ?? ""
         if let placeholderLabel = textField.superview?.viewWithTag(400) as? UILabel {
             placeholderLabel.isHidden = true
+            placeholderLabel.font = self.font
+            placeholderLabel.textColor = self.placeholderTextColor
             
             if text.count == 0 {
                 textField.isSecureTextEntry = false
